@@ -5,95 +5,65 @@ using namespace std;
 
 class Vector {
 public:
-    Vector(double h,double t){
-        tail=t;
-        head=h;
-        length=Length();
-        }
-    double head;
-    double tail;
+    double x1;
+    double y1;
+    double x2;
+    double y2;
     double length;
-    bool operator< (Vector v){
-        if(length<v.length) return 1;
-        else return 0;
-}
-private:
-    double Length(){
-        return sqrt(head*head+tail*tail);
+    Vector(double X1, double Y1, double X2, double Y2) {
+        x1 = X1;
+        y1 = Y1;
+        x2 = X2;
+        y2 = Y2;
+        double n1;
+        double n2;
+        n1 = pow(x2 - x1, 2);
+        n2 = pow(y2 - y1, 2);
+        length = sqrt(n1 + n2);
     }
+    Vector() {}
+    bool operator< (Vector dot) {
+        if (length < dot.length) return true;
+        else return false;
+    }
+    bool operator> (Vector dot) {
+        if (length > dot.length) return true;
+        else return false;
+    }
+    friend ostream &operator<< (ostream &os, Vector dot) {
+        os << "(" << dot.x1 << "," << dot.y1 << ")->" << "(" << dot.x2 << "," << dot.y2 << ")";
+        return os;
+    }
+private:
 };
 
-class SorterInt {
-private:
-    int min;
-    int max;
-    SorterInt() { }
+template <class T>
+class Sorter {
+    private:
+    T min;
+    T max;
+    Sorter() { }
 public:
-    SorterInt(int min, int max) {
+    Sorter(T min, T max) {
         this->min = min;
         this->max = max;
     }
-    void add(int newEle) {
+    void add(T newEle) {
         if (newEle < min) min = newEle;
         if (newEle > max) max = newEle;
     }
-    int getMin() const { return min; }
-    int getMax() const { return max; }
+    T getMin() const { return min; }
+    T getMax() const { return max; }
 };
-
-class SorterString {
-private:
-    string min;
-    string max;
-    SorterString() { }
-public:
-    SorterString(string min, string max) {
-        this->min = min;
-        this->max = max;
-    }
-    void add(string newEle) {
-        if (newEle < min) min = newEle;
-        if (newEle > max) max = newEle;
-    }
-    string getMin() const { return min; }
-    string getMax() const { return max; }
-};
-
-// TODO: Add class Sorter using template
 
 int main()
 {
-    /* SorterInt sorterInt(50, 50);
-    sorterInt.add(13);
-    sorterInt.add(94);
-    sorterInt.add(12);
-    sorterInt.add(430);
-    sorterInt.add(59);
-    cout << "sorterint     => min: " << sorterInt.getMin() << " max: " << sorterInt.getMax() << endl;
-
-    SorterString sorterStr("50", "50");
-    sorterStr.add("013");
-    sorterStr.add("94");
-    sorterStr.add("12");
-    sorterStr.add("403");
-    sorterStr.add("590");
-    cout << "sorterstring  => min: " << sorterStr.getMin() << " max: " << sorterStr.getMax() << endl;
-
-    Sorter<int> sorterTint(50, 50);
-    sorterTint.add(13);
-    sorterTint.add(94);
-    sorterTint.add(12);
-    sorterTint.add(430);
-    sorterTint.add(59);
-    cout << "sorter<int>   => min: " << sorterTint.getMin() << " max: " << sorterTint.getMax() << endl;
-
-    Sorter<string> sorterTstr("50", "50");
-    sorterTstr.add("013");
-    sorterTstr.add("94");
-    sorterTstr.add("12");
-    sorterTstr.add("403");
-    sorterTstr.add("590");
-    cout << "sorter<string>=> min: " << sorterStr.getMin() << " max: " << sorterStr.getMax() << endl; */
-
+    Sorter<Vector> sorterTstr(Vector(0, 0, 50, 50), Vector(0, 0, 50, 50));
+    sorterTstr.add(Vector(0, 0, 13, 13));
+    sorterTstr.add(Vector(0, 0, 94, 94));
+    sorterTstr.add(Vector(0, 0, 12, 12));
+    sorterTstr.add(Vector(0, 0, 403, 403));
+    sorterTstr.add(Vector(0, 0, 590, 590));
+    cout << "sorter<string>=> min: " << sorterTstr.getMin() << "    max: " << sorterTstr.getMax() << endl;
     return 0;
 }
